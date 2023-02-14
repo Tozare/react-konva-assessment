@@ -16,9 +16,9 @@ Expected Time: 5 hours
 
 ## Tasks
 
-- Allow the stars to be dragged
+- Allow the stars to be dragged [DONE]
 
-- Allow any given star to be selected with a Konva transfomer
+- Allow any given star to be selected with a Konva transfomer [DONE]
 
   - Customize the visual appearance of the transformer
   - Clicking the background should deselect

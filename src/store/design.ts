@@ -1,7 +1,8 @@
 import { Instance, types } from "mobx-state-tree";
 import { createContext, useContext } from "react";
 import { randomInRange } from "../util/randomInRange";
-import { Element } from "./element";
+import { Element, ElementType } from "./element";
+import Konva from "konva";
 
 function generateInitialState() {
   const initialState = [];
@@ -17,16 +18,24 @@ function generateInitialState() {
 
   return initialState;
 }
-
-export const Store = types.model("Store", {
-  elements: types.array(Element),
-});
+export const Store = types
+    .model("Store", {
+        selectedElement: types.safeReference(Element),
+      elements: types.array(Element),
+    })
+    .actions((self) => ({
+      selectElement(newSelectedElementId?: string) {
+        console.log(newSelectedElementId);
+        self.selectedElement = newSelectedElementId as any;
+      }
+    }));
 
 export type StoreType = Instance<typeof Store>;
-
 const store = Store.create({
   elements: generateInitialState(),
+  selectedElement: "",
 });
+console.log("store", store.selectedElement);
 
 export default store;
 
