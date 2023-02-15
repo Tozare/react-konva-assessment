@@ -27,7 +27,6 @@ export function StarElementImpl(props: StarProps) {
       outerRadius={40}
       fill={element.color}
       onClick={() => {
-        console.log(element);
         onSelect(element.id);
       }}
       draggable

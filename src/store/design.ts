@@ -4,6 +4,7 @@ import { randomInRange } from "../util/randomInRange";
 import { Element, ElementType } from "./element";
 import Konva from "konva";
 import {downloadObjectAsJson} from "../util/download-object-as-json";
+import {imageToBlackAndWhite} from "../util/image-to-black-and-white";
 
 function generateInitialState() {
   const initialState = [];
@@ -20,31 +21,42 @@ function generateInitialState() {
 
   return initialState;
 }
+
+
 export const Store = types
     .model("Store", {
       selectedElement: types.safeReference(Element),
       elements: types.array(Element),
+      imagePreview: types.maybeNull(types.string),
     })
     .actions((self) => ({
       selectElement(newSelectedElementId?: string) {
-        console.log(newSelectedElementId);
         self.selectedElement = newSelectedElementId as any;
       },
       downloadDesignAsJson () {
         downloadObjectAsJson(self.elements, "stars");
       },
       uploadDesignAsJson (jsonElements: string) {
-        console.log(JSON.parse(jsonElements));
         self.elements = JSON.parse(jsonElements);
-      }
+      },
+      generateImagePreview (layer: Konva.Layer) {
+        imageToBlackAndWhite(layer).then(self.setImagePreview);
+        // self.imagePreview = imageToBlackAndWhite(layer);
+      },
+      setImagePreview (url: string) {
+        self.imagePreview = url;
+      },
+      resetImagePreview () {
+        self.imagePreview = null;
+      },
     }));
 
 export type StoreType = Instance<typeof Store>;
 const store = Store.create({
   elements: generateInitialState(),
   selectedElement: "",
+  imagePreview: null,
 });
-console.log("store", store.selectedElement);
 
 export default store;
 

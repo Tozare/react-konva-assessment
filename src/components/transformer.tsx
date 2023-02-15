@@ -11,14 +11,11 @@ type Props = {
 export const Transformer = observer(({ stage }: Props) => {
     const { selectedElement } = useStore();
     const ref = useRef<Konva.Transformer>(null);
-    console.log("transformer", selectedElement, selectedElement?.id);
     useEffect(() => {
-        console.log(stage, ref)
         if (stage && ref.current) {
             const nodes = !!selectedElement
                 ? stage.find(`#${selectedElement.id}`)
                 : [];
-            console.log(nodes);
             ref.current.nodes(nodes);
         }
     }, [ref, stage, selectedElement]);

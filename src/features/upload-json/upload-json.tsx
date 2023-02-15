@@ -18,9 +18,7 @@ export const UploadJson = observer(() => {
         }
         const file = e.target.files[0];
         const reader = new FileReader();
-        console.log(file);
         function readFile(event: any) {
-            console.log(event.target.result);
             uploadDesignAsJson(event.target.result);
             const date = new Date();
             setKey(date.toDateString())
