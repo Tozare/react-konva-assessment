@@ -22,10 +22,10 @@ export function StarElementImpl(props: StarProps) {
       id={element.id}
       x={element.x}
       y={element.y}
-      numPoints={5}
+      numPoints={element.numPoints}
       innerRadius={20}
       outerRadius={40}
-      fill={"#ff7900"}
+      fill={element.color}
       onClick={() => {
         console.log(element);
         onSelect(element.id);

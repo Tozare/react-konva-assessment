@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 import { randomInRange } from "../util/randomInRange";
 import { Element, ElementType } from "./element";
 import Konva from "konva";
+import {downloadObjectAsJson} from "../util/download-object-as-json";
 
 function generateInitialState() {
   const initialState = [];
@@ -13,6 +14,7 @@ function generateInitialState() {
       x: randomInRange(window.innerWidth),
       y: randomInRange(window.innerHeight),
       numPoints: 5,
+      color: "#ff7900",
     });
   }
 
@@ -20,13 +22,20 @@ function generateInitialState() {
 }
 export const Store = types
     .model("Store", {
-        selectedElement: types.safeReference(Element),
+      selectedElement: types.safeReference(Element),
       elements: types.array(Element),
     })
     .actions((self) => ({
       selectElement(newSelectedElementId?: string) {
         console.log(newSelectedElementId);
         self.selectedElement = newSelectedElementId as any;
+      },
+      downloadDesignAsJson () {
+        downloadObjectAsJson(self.elements, "stars");
+      },
+      uploadDesignAsJson (jsonElements: string) {
+        console.log(JSON.parse(jsonElements));
+        self.elements = JSON.parse(jsonElements);
       }
     }));
 
